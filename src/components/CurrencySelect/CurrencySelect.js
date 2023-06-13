@@ -1,6 +1,6 @@
 import React from "react";
 import ListItem from "../List/ListItem";
-
+import "./CurrencySelect.css";
 function CurrencySelect({
   currencies,
   selectedCurrency,

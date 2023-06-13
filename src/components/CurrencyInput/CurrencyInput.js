@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./CurrencyInput.css";
 function CurrencyInput({ amount, handleAmountChange }) {
   return (
     <div className="amount-currency">
