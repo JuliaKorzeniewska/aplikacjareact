@@ -1,4 +1,3 @@
-
 import React from "react";
 import ListItem from "./ListItem";
 
@@ -13,4 +12,3 @@ function ListItems({ currencies }) {
 }
 
 export default ListItems;
-

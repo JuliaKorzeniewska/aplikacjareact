@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import ListItems from "./ListItems";
+import ListItem from "./List/ListItem";
+import CurrencyInput from "./CurrencyInput/CurrencyInput";
+import CurrencySelect from "./CurrencySelect/CurrencySelect";
+import Button from "./Button/Button";
+import Result from "./Result/Result";
 import { getCurrencies } from "../data/apiCurrencies";
 import { calculateResult, isDataValid } from "../data/calculateCurrencies";
 
@@ -17,19 +21,21 @@ function CurrencyConverter() {
       })
       .catch((error) => {
         setError("Error fetching currencies.");
-        console.log(error);
+        console.error(error);
       });
   }, []);
 
   const handleCurrencyChange = (event) => {
     setSelectedCurrency(event.target.value);
   };
-
   const handleAmountChange = (event) => {
     const inputValue = event.target.value;
     const regex = /^\d*\.?\d{0,2}$/;
-    if (regex.test(inputValue)) {
+
+    if (regex.test(inputValue) && parseFloat(inputValue) > 0) {
       setAmount(inputValue);
+    } else {
+      setAmount("");
     }
   };
 
@@ -58,6 +64,7 @@ function CurrencyConverter() {
       })
       .catch((error) => {
         setError("Wystąpił błąd podczas przeliczania waluty.");
+        console.error(error);
       });
   };
 
@@ -67,36 +74,14 @@ function CurrencyConverter() {
         <h1 className="logo">TransactWorld</h1>
         <h2>Przelicznik walut</h2>
       </div>
-      <div className="pick-currency">
-        <label htmlFor="currency">Wybierz walutę:</label>
-        <select
-          id="currency"
-          value={selectedCurrency}
-          onChange={handleCurrencyChange}
-        >
-          <ListItems currencies={currencies} />
-        </select>
-      </div>
-      <div className="amount-currency">
-        <label htmlFor="amount">Podaj kwotę:</label>
-        <input
-          type="number"
-          id="amount"
-          step="0.01"
-          min="0"
-          value={amount}
-          onChange={handleAmountChange}
-        />
-      </div>
-      <div>
-        <button onClick={convertCurrency} className="btn">
-          Przelicz
-        </button>
-      </div>
-      <div id="result" className="result">
-        {error && <div className="error">{error}</div>}
-        {result && <div>{result}</div>}
-      </div>
+      <CurrencySelect
+        currencies={currencies}
+        selectedCurrency={selectedCurrency}
+        handleCurrencyChange={handleCurrencyChange}
+      />
+      <CurrencyInput amount={amount} handleAmountChange={handleAmountChange} />
+      <Button onClick={convertCurrency} />
+      <Result error={error} result={result} />
     </div>
   );
 }
