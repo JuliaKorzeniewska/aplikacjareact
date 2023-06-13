@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ListItem from "./List/ListItem";
 import CurrencyInput from "./CurrencyInput/CurrencyInput";
 import CurrencySelect from "./CurrencySelect/CurrencySelect";
 import Button from "./Button/Button";
